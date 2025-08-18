@@ -7,6 +7,7 @@ pipeline {
 
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
+        VENV_PATH = "${WORKSPACE}/.venv"
     }
 
     stages {
@@ -42,10 +43,15 @@ pipeline {
 
         stage("Install Python Dependencies") {
             steps {
-                sh "pip install -r /src/requirements.txt"
+                sh """
+                    python3 -m venv ${VENV_PATH}
+                    . ${VENV_PATH}/bin/activate
+                    pip install --upgrade pip
+                    pip install -r src/requirements.txt
+                """
             }
         }
-                    
+
         
         // stage("OWASP FS Scan") {
         //     steps {
