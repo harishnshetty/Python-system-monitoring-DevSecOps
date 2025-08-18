@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
-        VENV_PATH = "${WORKSPACE}/.venv"
+        
     }
 
     stages {
@@ -41,27 +41,7 @@ pipeline {
             }
         }
 
-       stage("Install Python Dependencies") {
-            steps {
-                sh """
-                    # Install system packages required for building Python C extensions
-                    apt-get update && apt-get install -y --no-install-recommends \
-                        gcc \
-                        g++ \
-                        make \
-                        python3-dev \
-                        libffi-dev \
-                        libssl-dev \
-                        && rm -rf /var/lib/apt/lists/*
 
-                    # Create virtualenv and install Python packages
-                    python3 -m venv ${VENV_PATH}
-                    . ${VENV_PATH}/bin/activate
-                    pip install --upgrade pip
-                    pip install -r src/requirements.txt
-                """
-            }
-        }
 
 
         
