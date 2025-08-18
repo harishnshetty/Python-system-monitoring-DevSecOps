@@ -41,9 +41,20 @@ pipeline {
             }
         }
 
-        stage("Install Python Dependencies") {
-            steps {
+       stage("Install Python Dependencies") {
+    s       teps {
                 sh """
+                    # Install system packages required for building Python C extensions
+                    apt-get update && apt-get install -y --no-install-recommends \
+                        gcc \
+                        g++ \
+                        make \
+                        python3-dev \
+                        libffi-dev \
+                        libssl-dev \
+                        && rm -rf /var/lib/apt/lists/*
+
+                    # Create virtualenv and install Python packages
                     python3 -m venv ${VENV_PATH}
                     . ${VENV_PATH}/bin/activate
                     pip install --upgrade pip
@@ -51,6 +62,7 @@ pipeline {
                 """
             }
         }
+
 
         
         // stage("OWASP FS Scan") {
