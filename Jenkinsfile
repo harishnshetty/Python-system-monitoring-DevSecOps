@@ -42,7 +42,7 @@ pipeline {
         }
 
        stage("Install Python Dependencies") {
-    s       teps {
+            steps {
                 sh """
                     # Install system packages required for building Python C extensions
                     apt-get update && apt-get install -y --no-install-recommends \
