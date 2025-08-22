@@ -19,7 +19,7 @@ pipeline {
 
         stage("Git Checkout") {
             steps {
-                git branch: 'main', url: 'https://github.com/harishnshetty/system-monitoring-devsecops.git'
+                git branch: 'main', url: 'https://github.com/harishnshetty/Python-system-monitoring-DevSecOps.git'
             }
         }
 
@@ -44,24 +44,14 @@ pipeline {
 
 
 
-        
-        // stage("OWASP FS Scan") {
-        //     steps {
-        //         dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit',
-        //                         odcInstallation: 'dp-check'
-        //         dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-        //     }
-        // }  
-
-        
-        // https://nvd.nist.gov/developers/request-an-api-key  [request an API key]
+       
         stage("OWASP FS Scan") {
             steps {
                 dependencyCheck additionalArguments: '''
                     --scan ./ 
                     --disableYarnAudit 
                     --disableNodeAudit 
-                    --nvdApiKey 788b28b3-e0a8-4fcf-a6c7-a6c4b772d8a7  
+                    
                     ''',
                 odcInstallation: 'dp-check'
 
